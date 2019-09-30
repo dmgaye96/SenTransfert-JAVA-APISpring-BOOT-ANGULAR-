@@ -1,0 +1,28 @@
+<div class="col-lg-8">
+    <h4 class="mb-4 text-muted">Bienvenu sur Sen Transfert </h4>
+    <div class="row">
+      <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
+
+            <img src="./assets/img/logo.png" class="img-fluid" alt="">
+          <div class="card-title mb-1 p-3">
+
+          </div>
+          <div class="card-body">
+            <form #f="ngForm" (ngSubmit)="onLogin(f.value)">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" name="username" ngModel aria-describedby="emailHelp"
+                  placeholder="Entrer votre usernam">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control " id="exampleInputPassword1" ngModel name="password" placeholder="Password">
+              </div>
+
+              <button type="submit" class="btn btn-lightning">Connecxion</button>
+            </form>
+          </div>
+
+      </div>
+      </div>
+ </div>

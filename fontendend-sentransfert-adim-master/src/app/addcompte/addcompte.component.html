@@ -1,0 +1,33 @@
+<div class="wrapper default-theme">
+  <app-navbar></app-navbar>
+  <main>
+    <app-sidebar></app-sidebar>
+    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+      <h4 class="mb-4 text-muted">Ajouter un Compte</h4>
+
+
+  <div class="row">
+      <div class="col-md-8 mb-4 ">
+        <div class="form-group">
+          <form  #imageForm=ngForm (ngSubmit)="onsubmit(imageForm.value)">
+          <label for="exampleInputEmail1">Selectionner un Partenaire</label>
+          <select class="form-control" #partenaire ngModel name="partenaire">
+            <option *ngFor="let p of  partenaires" value="{{p.id}}">{{p.raisonsociale}}</option>
+          </select>
+
+
+          <br> <br>
+            <button type="submit" class="btn btn-lightning">Ajouter</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+      <router-outlet></router-outlet>
+      <hr>
+      <app-footer></app-footer>
+    </div>
+    <div class="overlay" ></div>
+  </main>
+</div>
+

@@ -1,0 +1,152 @@
+
+<div class="wrapper default-theme">
+  <app-navbar></app-navbar>
+  <main>
+    <app-sidebaruser></app-sidebaruser>
+    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+      <h4 class="mb-4 text-muted">Rembourssement</h4>
+
+
+  <div class="row">
+      <div class="col-md-12 mb-4 ">
+
+        <div class="card border-0 rounded">
+          <div class="card-body">
+
+            <form [formGroup]="retraitf" (ngSubmit)="onsubmit(retraitf.value)" >
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Rechercher un Code</label>
+                    <input type="text" class="form-control  rounded" id="exampleFormControlInput1"
+                   placeholder="Rechercher un Code"   formControlName="code" name="code" >
+                  </div>
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-lightning rounded mb-2 mr-2">Recherchez un Compte</button>
+                    </div>
+
+
+
+            </form >
+
+
+
+
+                <div class="row">
+                    <div class="col-md-12 mb-4 ">
+
+                      <div class="card border-0 rounded">
+                        <div class="card-body">
+
+
+                            <div>
+
+
+
+                                <div class="row" >
+                                  <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
+                                    <div class="card border-0 rounded h-100">
+                                      <div class="card-title mb-1 p-3">
+                                        <h5  *ngFor="let infocode of infocode" >Envoyeur</h5>
+                                      </div>
+                                      <div class="card-body">
+
+                                          <div class="form-group" *ngFor="let infocode of infocode" >
+                                            <label for="exampleFormControlInput1">Nom</label>
+                                            <input type="texte" class="form-control  rounded" value='{{infocode.nomE }}' disabled>
+                                          </div>
+
+                                          <div class="form-group"  *ngFor="let infocode of infocode" >
+                                            <label for="exampleFormControlInput1">Prenom</label>
+                                            <input type="texte" class="form-control  rounded" value='{{infocode.prenomE }}' disabled
+                                              placeholder="Prenom" >
+                                          </div>
+                                          <div class="form-group"  *ngFor="let infocode of infocode" >
+                                            <label for="exampleFormControlInput1">Telephone</label>
+                                            <input type="texte" class="form-control  rounded" value='{{infocode.telephoneE }}' disabled
+                                              placeholder="Telephone" >
+                                          </div>
+
+
+
+                                          <div class="form-group"  *ngFor="let infocode of infocode" >
+                                            <label for="exampleFormControlInput1">Montant</label>
+                                            <input type="texte" class="form-control  rounded" value='{{infocode.montant }}' disabled
+                                            >
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
+                                    <div class="card border-0 rounded-0 h-100" >
+                                      <div class="card-title mb-1 p-3">
+                                        <h5  *ngFor="let infocode of infocode" >Beneficiaire</h5>
+                                      </div>
+                                      <div class="card-body">
+
+
+
+                                          <div class="form-group"  *ngFor="let infocode of infocode" >
+                                            <label for="exampleFormControlInput1">Nom</label>
+                                            <input type="texte" class="form-control  rounded"
+                                              placeholder="Nom" value='{{infocode.nomB }}' disabled >
+                                          </div>
+
+                                          <div class="form-group"  *ngFor="let infocode of infocode" >
+                                            <label for="exampleFormControlInput1">Prenom</label>
+                                            <input type="texte" class="form-control  rounded"
+                                              placeholder="prenom" value='{{infocode.prenomB }}' disabled >
+                                          </div>
+                                          <div *ngFor="let infocode of infocode" >
+                                          <div class="form-group"  *ngFor="let infocode of infocode" >
+                                            <label for="exampleFormControlInput1">Telephone</label>
+                                            <input type="texte" class="form-control  rounded"
+                                              placeholder="Telephone" value='{{infocode.telephoneB }}' disabled >
+                                          </div>
+
+                                          <form [formGroup]="retraitf" (ngSubmit)="onsubmit1(retraitf.value)" >
+                                              <div class="form-group" >
+                                                  <label for="exampleFormControlInput1">Numero de Piece</label>
+                                                  <input type="texte" class="form-control  rounded"
+                                                    placeholder="numeropiece"   name="numeropiece" formControlName="numeropiece" >
+
+                                                </div>
+                                                <div class="text-danger"  *ngFor="let error of errorMessage.numeropiece">
+                                                    <div *ngIf="retraitf.get('numeropiece').hasError(error.type) &&
+                                                     (retraitf.get('numeropiece').dirty || retraitf.get('numeropiece').touched)">
+                                                        {{error.message}}
+                                                    </div>
+                                                </div>
+
+                                          <button  type="submit" class="btn btn-lightning rounded mb-2 mr-2">Validez</button>
+                                        </form>
+                                      </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <router-outlet></router-outlet>
+      <hr>
+      <app-footer></app-footer>
+    </div>
+    <div class="overlay" ></div>
+  </main>
+</div>

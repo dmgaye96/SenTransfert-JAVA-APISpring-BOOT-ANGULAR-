@@ -1,0 +1,81 @@
+<div class="wrapper default-theme">
+  <app-navbar></app-navbar>
+  <main>
+    <app-sidebaradminp></app-sidebaradminp>
+    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+      <h4 class="mb-4 text-muted"> Ajouter utilisateur ou Admin </h4>
+
+
+      <div class="row">
+        <div class="col-md-12 mb-4 ">
+
+          <div class="card border-0 rounded">
+            <div class="card-body">
+              <form #imageForm=ngForm (ngSubmit)="onsubmit(imageForm.value)">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Nom complet de l'Admine</label>
+                  <input type="name" class="form-control  rounded" id="exampleFormControlInput1"
+                    placeholder="Nom complet de l'Admine" name="nom" ngModel>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Telephone</label>
+                  <input type="number" #telephone ngModel required="required" min=700000000 max=800000000
+                    name="telephone" class="form-control  rounded" id="exampleFormControlInput1"
+                    placeholder="Telephone" name="telephone">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Email address</label>
+                  <input type="email" class="form-control  rounded" id="exampleFormControlInput1"
+                    placeholder="name@example.com" name="email" ngModel>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Login</label>
+                  <input type="text" #login ngModel required="required" name="login" class="form-control" id="username"
+                    class="form-control  rounded" placeholder="Login">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Password</label>
+                  <input type="password" class="form-control  rounded" id="exampleFormControlInput1"
+                    placeholder="Password" name="password" ngModel>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Role</label>
+                  <select class="form-control" #Profile ngModel name="Profile">
+                    <option *ngFor="let pr of profils" value="{{pr.id}}">{{pr.libelle}}</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <div class="col">
+                    <img alt="" [src]="imageUrl" style="width: 250px; height:200px">
+
+                  </div>
+                  <label>Photo</label>
+                  <div class="custom-file">
+                    <input input name="photo" #photo ngModel type="file" #Image accept="image/"
+                      (change)="handleFileInput($event.target.files)" class="custom-file-input">
+                    <label class="custom-file-label rounded" for="customFile">Photo</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" [disabled]="Image.value=='' || !imageForm.valid"
+                    class="btn btn-lightning rounded mb-2 mr-2">Ajouter</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <router-outlet></router-outlet>
+      <hr>
+      <app-footer></app-footer>
+    </div>
+    <div class="overlay"></div>
+  </main>
+</div>

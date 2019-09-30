@@ -1,0 +1,44 @@
+<div class="wrapper default-theme">
+    <app-navbarlogin></app-navbarlogin>
+    <main>
+
+      <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+        <div class="row">
+        <div class="col-lg-4"> </div>
+          <div class="col-lg-8">
+
+
+                <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
+                    <h4 class="mb-4 text-muted">Bienvenu sur Sen Transfert    <img src="./assets/img/sn.png" alt="lightning logo" width="35px"> </h4>
+                      <img src="./assets/img/logo.png" class="img-fluid" alt="">
+
+                      <form #f="ngForm" (ngSubmit)="onLogin(f.value)">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Username</label>
+                          <input type="email" class="form-control" id="exampleInputEmail1" name="username" ngModel aria-describedby="emailHelp"
+                            placeholder="Entrer votre usernam">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Password</label>
+                          <input type="password" class="form-control " id="exampleInputPassword1" ngModel name="password" placeholder="Password">
+                        </div>
+
+                        <button type="submit" class="btn btn-lightning">Connecxion</button>
+                      </form>
+
+
+                </div>
+
+           </div>
+          </div>
+        <router-outlet></router-outlet>
+        <hr>
+        <div class="col-md-12 text-center mb-2">
+            <small> © 2019 EDMG <i class="fa fa-heart text-danger" aria-hidden="true"></i> by <span
+                class="text-secondary font-weight-bold">DMG</span></small>
+          </div>
+      </div>
+      <div class="overlay" ></div>
+    </main>
+  </div>
+

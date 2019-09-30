@@ -1,0 +1,121 @@
+<div class="wrapper default-theme">
+  <app-navbar></app-navbar>
+  <main>
+    <app-sidebar></app-sidebar>
+    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+      <h4 class="mb-4 text-muted"> Ajouter utilisateur ou Admin </h4>
+
+
+      <div class="row">
+        <div class="col-md-12 mb-4 ">
+
+          <div class="card border-0 rounded">
+            <div class="card-body">
+              <form [formGroup]="utilisateur" (ngSubmit)="onsubmit(utilisateur.value)">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Nom complet de l'Admine</label>
+                  <input type="name" class="form-control  rounded" id="exampleFormControlInput1"
+                    placeholder="Nom complet de l'Admine" formControlName="nom"  name="nom" >
+                    <div class="text-danger"  *ngFor="let error of errorMessage.nom">
+                      <div *ngIf="utilisateur.get('nom').hasError(error.type) &&
+                       (utilisateur.get('nom').dirty || utilisateur.get('nom').touched)">
+                          {{error.message}}
+                      </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Telephone</label>
+                  <input formControlName="telephone"   class="form-control  rounded"  placeholder="Telephone" name="telephone">
+
+                  <div class="text-danger" *ngFor="let error of errorMessage.telephone">
+                    <div *ngIf="utilisateur.get('telephone').hasError(error.type) &&
+                     (utilisateur.get('telephone').dirty || utilisateur.get('telephone').touched)">
+                        {{error.message}}
+                    </div>
+                </div>
+
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Email address</label>
+                  <input type="email" class="form-control  rounded" id="exampleFormControlInput1"
+                    placeholder="name@example.com" name="email" formControlName="email"  >
+                    <div class="text-danger"  *ngFor="let error of errorMessage.email">
+                      <div *ngIf="utilisateur.get('email').hasError(error.type) &&
+                       (utilisateur.get('email').dirty || utilisateur.get('email').touched)">
+                          {{error.message}}
+                      </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Login</label>
+                  <input type="text" formControlName="login"  name="login" class="form-control" id="login"
+                    class="form-control  rounded" placeholder="Login">
+                    <div class="text-danger"  *ngFor="let error of errorMessage.login">
+                      <div *ngIf="utilisateur.get('login').hasError(error.type) &&
+                       (utilisateur.get('login').dirty || utilisateur.get('login').touched)">
+                          {{error.message}}
+                      </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Password</label>
+                  <input type="password" class="form-control  rounded" id="exampleFormControlInput1"
+                    placeholder="Password" name="password" formControlName="password" >
+
+                    <div class="text-danger"  *ngFor="let error of errorMessage.password">
+                      <div *ngIf="utilisateur.get('password').hasError(error.type) &&
+                       (utilisateur.get('password').dirty || utilisateur.get('password').touched)">
+                          {{error.message}}
+                      </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Role</label>
+                  <select class="form-control" formControlName="Profile"  name="Profile">
+                    <option *ngFor="let pr of profils" value="{{pr.id}}">{{pr.libelle}}</option>
+                  </select>
+
+                  <div class="text-danger"  *ngFor="let error of errorMessage.Profile">
+                    <div *ngIf="utilisateur.get('Profile').hasError(error.type) &&
+                     (utilisateur.get('Profile').dirty || utilisateur.get('Profile').touched)">
+                        {{error.message}}
+                    </div>
+                </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col">
+                    <img alt="" [src]="imageUrl" style="width: 250px; height:200px">
+
+                  </div>
+                  <label>Photo</label>
+                  <div class="custom-file">
+                    <input input name="photo"  formControlName="photo" type="file" #Image accept="image/"
+                      (change)="handleFileInput($event.target.files)" class="custom-file-input">
+                    <label class="custom-file-label rounded" for="customFile">Photo</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit"
+                    class="btn btn-lightning rounded mb-2 mr-2">Ajouter</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <router-outlet></router-outlet>
+      <hr>
+      <app-footer></app-footer>
+    </div>
+    <div class="overlay"></div>
+  </main>
+</div>

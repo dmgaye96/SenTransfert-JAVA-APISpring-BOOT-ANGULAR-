@@ -1,0 +1,83 @@
+<app-header></app-header>
+<br> <br>
+<h1 align="center"> Add User</h1>
+<br>
+<form [formGroup]="utilisateur" (ngSubmit)="onsubmit(utilisateur.value)">
+    <div class="form-group row col-6 col-md-push-4 offset-md-3">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
+        <div class="col">
+            <input type="text" formControlName="username" name="username" class="form-control" id="username" placeholder="Username">
+            <div *ngFor="let error of errorMessage.username">
+                <div *ngIf="utilisateur.get('username').hasError(error.type) &&
+                 (utilisateur.get('username').dirty || utilisateur.get('username').touched)">
+                    {{error.message}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group row col-6 col-md-push-4 offset-md-3">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Prenom</label>
+        <div class="col">
+        <input type="text" formControlName="prenom"   name="prenom" class="form-control" id="inputPassword3" placeholder="Taper Votre Prenom">
+        <div *ngFor="let error of errorMessage.prenom">
+                <div *ngIf="utilisateur.get('prenom').hasError(error.type) &&
+                 (utilisateur.get('prenom').dirty || utilisateur.get('prenom').touched)">
+                    {{error.message}}
+                </div>
+            </div>
+    </div>
+    </div>
+    <div class="form-group row col-6 col-md-push-4 offset-md-3">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Nom</label>
+        <div class="col">
+        <input type="text"  formControlName="nom"  name="nom" class="form-control" id="inputPassword3" placeholder="Taper Votre nom">
+        <div *ngFor="let error of errorMessage.nom">
+                <div *ngIf="utilisateur.get('nom').hasError(error.type) &&
+                 (utilisateur.get('nom').dirty || utilisateur.get('nom').touched)">
+                    {{error.message}}
+                </div>
+            </div>
+    </div>
+    </div>
+    <div class="form-group row col-6 col-md-push-4 offset-md-3">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Telephone</label>
+        <div class="col">
+        <input formControlName="telephone" name="telephone" class="form-control" id="inputPassword3" placeholder="Téléphone">
+        <div *ngFor="let error of errorMessage.telephone">
+                <div *ngIf="utilisateur.get('telephone').hasError(error.type) &&
+                 (utilisateur.get('telephone').dirty || utilisateur.get('telephone').touched)">
+                    {{error.message}}
+                </div>
+            </div>
+    </div>
+    </div>
+    <div class="form-group row col-6 col-md-push-4 offset-md-3">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Rôle</label>
+        <div class="col">
+                <div *ngFor="let error of errorMessage.profil">
+                        <div *ngIf="utilisateur.get('profil').hasError(error.type) &&
+                         (utilisateur.get('profil').dirty || utilisateur.get('profil').touched)">
+                            {{error.message}}
+                        </div>
+                </div>
+        <select formControlName="profil" class="form-control" ngDefaultControl>
+            <option *ngFor="let pr of profils" value="{{pr.id}}">{{pr.libelle}}</option>
+
+        </select>
+
+        </div>
+    </div>
+    <div class="form-group row col-6 col-md-push-4 offset-md-3">
+        <label for="inputPassword3" class="col-sm-2 col-form-label"></label>
+      <div class="col">
+            <img alt="" [src]="imageUrl"  style="width: 250px; height:200px">
+
+        </div>
+    </div>
+    <div class="form-group row col-6 col-md-push-4 offset-md-3">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Photo</label>
+        <div class="col">
+        <input name="photo"  type="file" #Image accept="image/" (change)="handleFileInput($event.target.files)">
+        </div>
+    </div>
