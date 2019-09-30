@@ -16,7 +16,7 @@ export class AuthService {
 host: string = "http://localhost:8080/authenticate";
 jwt:string;
 username:string;
-roles:Array<string>;
+  aud:string;
 
   constructor(private http:HttpClient , private router: Router) { }
 
@@ -38,13 +38,13 @@ roles:Array<string>;
     let jwtHelper= new JwtHelperService();
     let objJWT=jwtHelper.decodeToken(this.jwt);
     this.username=objJWT.obj;
-    this.roles=objJWT.roles;
-    localStorage.setItem('role', objJWT.roles);
+    this.aud=objJWT.aud;
+    localStorage.setItem('aud', objJWT.aud);
 
   }
   getRole(){
 
-    return localStorage.getItem('role');
+    return localStorage.getItem('aud');
   }
 
 
@@ -55,21 +55,21 @@ roles:Array<string>;
   }
 
   isAdmin(){
-    return this.roles.indexOf('ROLE_SUPERADMIN')>=0;
+    return this.aud.indexOf('ROLE_SUPERADMIN')>=0;
   }
   isCaissier(){
-    return this.roles.indexOf('ROLE_CAISSIER')>=0;
+    return this.aud.indexOf('ROLE_CAISSIER')>=0;
    }
 
     isAdminP(){
-      return this.roles.indexOf('ROLE_ADMINP')>=0;
+      return this.aud.indexOf('ROLE_ADMINP')>=0;
       }
 
   isUser(){
-    return this.roles.indexOf('ROLE_USER')>=0;
+    return this.aud.indexOf('ROLE_USER')>=0;
   }
   isAuthenticated(){
-   return this.roles && ( this.isAdmin() || this.isUser() || this.isAdminP() || this.isCaissier() );
+   return this.aud && ( this.isAdmin() || this.isUser() || this.isAdminP() || this.isCaissier() );
   }
   loadToken(){
     this.jwt=localStorage.getItem('token');
@@ -93,7 +93,7 @@ roles:Array<string>;
   initParams(){
     this.jwt=undefined;
    this.username=undefined;
-    this.roles=undefined;
+    this.aud=undefined;
 
 }
 
