@@ -47,8 +47,9 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
     //generate token for user
+
     public String generateToken(UserDetails userDetails) {
-        Claims claims = Jwts.claims().setAudience(String.valueOf(userDetails.getAuthorities()));
+        Claims claims = Jwts.claims().setAudience(String.valueOf(userDetails.getAuthorities())); //permet de retourner le role au niveau du token
         return doGenerateToken(claims, userDetails.getUsername());
     }
     //while creating the token -

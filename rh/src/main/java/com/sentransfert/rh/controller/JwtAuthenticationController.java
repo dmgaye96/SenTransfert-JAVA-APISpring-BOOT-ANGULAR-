@@ -3,6 +3,7 @@ package com.sentransfert.rh.controller;
 import com.sentransfert.rh.config.JwtTokenUtil;
 import com.sentransfert.rh.model.JwtRequest;
 import com.sentransfert.rh.model.JwtResponse;
+import com.sentransfert.rh.model.User;
 import com.sentransfert.rh.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,7 +23,7 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl userDetailsService; //#####4####
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE })
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -54,5 +55,5 @@ public class JwtAuthenticationController {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
-
+ //  User user=userDetailsService.getUserConnecte(); //  permet de connaitre le user connecter
 }

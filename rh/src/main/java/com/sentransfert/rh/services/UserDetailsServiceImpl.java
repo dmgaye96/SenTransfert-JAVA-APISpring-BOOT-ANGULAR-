@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private User userConnecte; //###1###
 
     @Autowired
     UserRepository userRepository;
+
 
     @Override
     @Transactional
@@ -24,7 +26,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User Not Found with -> username or email : " + username));
         //c est ici que mohamet gerer les garants
-
+        this.userConnecte=user; //####2####
         return UserPrinciple.build(user);
+    }
+
+    @Autowired
+    public  User getUserConnecte()
+    {
+        return userConnecte;
     }
 }
