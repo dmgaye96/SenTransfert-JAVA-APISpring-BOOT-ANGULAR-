@@ -23,13 +23,11 @@ import java.util.Set;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins ="*")
 @RequestMapping(value = "/user")
 
-
-
-
 public class UserController {
+
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -54,11 +52,9 @@ public class UserController {
 
     @Autowired
     private RoleRepository roleRepository;
-    @GetMapping(value = "/listrole")
+    @RequestMapping(value = "/listrole", method = RequestMethod.GET, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+//    @GetMapping(value = "/listrole" , method = RequestMethod.GET ,consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE })
     public List<Role> listeRole(){ return roleRepository.findAll(); }
-
-
-
 
 
 

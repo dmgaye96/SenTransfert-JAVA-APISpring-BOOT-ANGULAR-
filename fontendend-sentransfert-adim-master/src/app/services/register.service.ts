@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class RegisterService {
 
 
-private url:string = "http://localhost:8000/api/liste/profile";
+private url:string = "http://localhost:8080/user/listrole";
 
   constructor(private http: HttpClient, private authService: AuthService ,private router:Router) { }
 
@@ -27,7 +27,7 @@ private url:string = "http://localhost:8000/api/liste/profile";
 
     const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
 
-    const host = "http://localhost:8000/api/register";
+    const host = "http://localhost:8080/user/add";
 
     const formData: FormData= new FormData();
     formData.append('login', register.login);
