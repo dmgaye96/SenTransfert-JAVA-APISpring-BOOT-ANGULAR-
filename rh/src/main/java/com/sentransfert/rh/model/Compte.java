@@ -1,5 +1,6 @@
 package com.sentransfert.rh.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -18,13 +19,13 @@ public class Compte {
     @ManyToOne(optional = false)
     private Partenaire partenaire;
     @NotBlank
-    @Size(min=3, max = 50)
     private String numerocompte;
 
-
     private Double solde;
+    @JsonIgnore
     @OneToMany(mappedBy ="compte")
     private List<Depot> depots;
+    @JsonIgnore
     @OneToMany(mappedBy ="compte")
     private List <User> users;
     @JsonIgnoreProperties("compte")

@@ -146,6 +146,122 @@ public User detail(){
         return partenaireRepository.save(p);
     }
 
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PostMapping(value = "/addDepot",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    public ResponseEntity<String> addepot (@RequestBody(required = false) RegistrationUser registrationUser){
+        Depot d =new Depot();
+        d.setDate(new Date());
+        d.setMontant(registrationUser.getMontant());
+        d.setCompte(registrationUser.getCompte());
+        User user=userDetailsService.getUserConnecte();
+        d.setUser(user);
+        //ajout du montant du depot sur le solde du compte
+        Compte cpt= compteRepository.findById(registrationUser.getCompte().getId()).orElseThrow();
+        cpt.setSolde(cpt.getSolde()+d.getMontant());
+        compteRepository.save(cpt);
+        depotRepository.save(d);
+
+        return new ResponseEntity<>("depot reussit", HttpStatus.OK);
+    }
+
+
+
+    //@PreAuthorize("hasAuthority('ROLE_SUPER_ADMIN')")
+    @PostMapping(value = "/addCompte",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    public ResponseEntity<String> findcompte (@RequestBody(required = false) RegistrationUser registrationUser){
+
+        Compte c = new Compte();
+
+        SimpleDateFormat formater = null;
+
+        formater = new SimpleDateFormat("ssyyyyMMddHHmm");
+        Date now=new Date();
+        String numcompt = formater.format(now);
+         Partenaire p= registrationUser.getPartenaire();
+
+        c.setNumerocompte(numcompt);
+        c.setSolde((double) 0);
+        c.setSolde((double) 75000);
+        c.setPartenaire(p);
+        compteRepository.save(c);
+
+        return new ResponseEntity<>("ajoue compte  reussit", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/findCompte",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    public Compte findCompte (@RequestBody(required = false) RegistrationUser  registrationUser) throws Exception {
+
+        Compte c = (Compte) compteRepository.findCompteByNumerocompte(registrationUser.getNumerocompte()).orElseThrow(
+                ()->new Exception ("Ce numero de Compte n'existe pas"));
+        return c;
+    }
+
+
+
+    @PostMapping(value = "/compteUser",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    public ResponseEntity<String> addCompteUser (@RequestBody(required = false) RegistrationUser  accountUser){
+        User user= userRepository.findByUsername(accountUser.getUsername()).orElseThrow();
+        user.setUsername(accountUser.getUsername());
+        user.setCompte(accountUser.getCompte());
+        userRepository.save(user);
+
+        return new ResponseEntity<>("Compte Utilsateur Ajouté Avec Succés", HttpStatus.OK);
+    }
+
+
+
+    @PutMapping(value = "/statut/{id}",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    public ResponseEntity<String> blockUser (@PathVariable("id")long id) throws Exception {
+        User etat= userRepository.findById(id).orElseThrow(
+                ()->new Exception ("Ce user n'existe pas")
+        );
+
+        if(etat.getUsername().equals("kabirou")){
+            return new ResponseEntity<>(etat.getUsername()+ " Ne peut pas être bloqué car c'est le super admin", HttpStatus.OK);
+        }
+        if (etat.getStatut().equals("debloquer")){
+            etat.setStatut("bloquer");
+            userRepository.save(etat);
+            return new ResponseEntity<>(etat.getUsername()+ " a été bloqué", HttpStatus.OK);
+        }
+        else{
+            etat.setStatut("debloquer");
+            userRepository.save(etat);
+            return new ResponseEntity<>(etat.getUsername()+ " a été débloqué", HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "/findUsername",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    public User findUsername (@RequestBody(required = false) RegistrationUser  registrationUser) throws Exception {
+
+        User u = (User) userRepository.findByUsername(registrationUser.getUsername())
+                .orElseThrow(()->new Exception ("Ce username n'existe pas")
+
+                );
+        return u;
+
+    }
+
+
+
+    @PutMapping(value = "/statut/{id}",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    public ResponseEntity<String> blockPartener (@PathVariable("id")int id) throws Exception {
+        Partenaire etat= partenaireRepository.findById((long) id).orElseThrow(
+                ()->new Exception ("Ce Partenaire n'existe pas")
+        );
+
+
+        if (etat.getStatut().equals("debloquer")){
+            etat.setStatut("bloquer");
+            partenaireRepository.save(etat);
+            return new ResponseEntity<>(etat.getRaisonsociale()+ " a été bloqué", HttpStatus.OK);
+        }
+        else{
+            etat.setStatut("debloquer");
+            partenaireRepository.save(etat);
+            return new ResponseEntity<>(etat.getRaisonsociale()+ " a été débloqué", HttpStatus.OK);
+        }
+    }
 }
 
 

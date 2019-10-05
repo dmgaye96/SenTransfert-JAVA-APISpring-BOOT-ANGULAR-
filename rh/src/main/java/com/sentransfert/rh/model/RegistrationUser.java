@@ -2,6 +2,7 @@ package com.sentransfert.rh.model;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 public class RegistrationUser {
 
@@ -26,6 +27,26 @@ public class RegistrationUser {
     private String numerocompte;
     private Double solde;
 
+//DEPOT
+    private Date date;
+    private Double montant;
+
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Double getMontant() {
+        return montant;
+    }
+
+    public void setMontant(Double montant) {
+        this.montant = montant;
+    }
 
     public String getRaisonsociale() {
         return raisonsociale;

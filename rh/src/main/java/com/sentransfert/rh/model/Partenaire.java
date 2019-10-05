@@ -1,5 +1,6 @@
 package com.sentransfert.rh.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -32,9 +33,11 @@ public class Partenaire {
     @NotBlank
     @Size(min=3, max = 50)
     private String statut;
+    @JsonIgnore
     @OneToMany(mappedBy ="partenaire")
 
     private List <Compte> comptes;
+    @JsonIgnore
     @OneToMany(mappedBy ="partenaire")
     private List <User> users;
     @JsonIgnoreProperties("partenaire")

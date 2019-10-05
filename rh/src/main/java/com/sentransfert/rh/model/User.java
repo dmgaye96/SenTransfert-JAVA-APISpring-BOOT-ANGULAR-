@@ -1,5 +1,6 @@
 package com.sentransfert.rh.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.NaturalId;
 
@@ -50,18 +51,21 @@ public class User{
     @NotBlank
     @Size(min=6, max = 100)
     private String password;
+    @JsonIgnore
     @OneToMany(mappedBy ="user")
     @JsonIgnoreProperties("user")
     private List<Depot> depots;
 
     @JoinColumn(name = "partenaire_id" ,referencedColumnName = "id" , nullable = true)
+    @JsonIgnore
     @ManyToOne(optional = false)
     private Partenaire partenaire;
 
     @JoinColumn(name = "compte_id" ,referencedColumnName = "id" , nullable = true)
+    @JsonIgnore
     @ManyToOne(optional = false)
     private Compte compte;
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

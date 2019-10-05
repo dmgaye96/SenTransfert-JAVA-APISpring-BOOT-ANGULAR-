@@ -12,4 +12,6 @@ import java.util.Optional;
 @Repository //permet de crere un objet
 public interface CompteRepository extends JpaRepository<Compte, Long> {
 
+    Optional<Object> findCompteByNumerocompte(String numerocompte);
+
 }

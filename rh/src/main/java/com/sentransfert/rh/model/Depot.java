@@ -1,6 +1,7 @@
 package com.sentransfert.rh.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,20 +23,19 @@ public class Depot {
     private Long id;
 
     @JoinColumn(name = "compte_id" ,referencedColumnName = "id")
+    @JsonIgnore
     @ManyToOne(optional = false)
     private Compte compte;
-
-    @NotBlank
-    @Size(min=3, max = 50)
     private Double montant;
 
     @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date date;
 
     @JoinColumn(name = "caissier_id" ,referencedColumnName = "id")
+    @JsonIgnore
     @ManyToOne(optional = false)
      User user;
-    @JsonIgnoreProperties("depots")
+
 
 
     public Long getId() {
