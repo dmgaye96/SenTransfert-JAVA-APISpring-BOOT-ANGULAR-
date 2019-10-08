@@ -16,8 +16,6 @@ private url:string = "http://localhost:8080/user/listrole";
 
 
   getAllProfil() : Observable<any[]>  {
-
-
     const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
     return  this.http.get<any>(this.url , {headers : headers} );
  }
@@ -30,14 +28,14 @@ private url:string = "http://localhost:8080/user/listrole";
     const host = "http://localhost:8080/user/add";
 
     const formData: FormData= new FormData();
-    formData.append('login', register.login);
-    formData.append('nom', register.nom);
+    formData.append('username', register.username);
+    formData.append('name', register.name);
    // formData.append('telephone', register.telephone);
     formData.append('password', register.password);
     formData.append('email', register.email);
     formData.append('telephone', register.telephone);
     formData.append('imageName', fileToUpload, fileToUpload.name);
-    formData.append('Profile', register.Profile);
+    formData.append('profil', register.profil);
 
     return this.http.post(host, formData , {headers : headers} );
   }
@@ -45,7 +43,7 @@ private url:string = "http://localhost:8080/user/listrole";
 
   getAllcompte() : Observable<any[]>  {
 
-    const host = "http://localhost:8000/api/liste/partenaireliste";
+    const host = "http://localhost:8080/user/liscompte";
 
     const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
     return  this.http.get<any>( host, {headers : headers} );
@@ -53,10 +51,7 @@ private url:string = "http://localhost:8080/user/listrole";
 addCompt(compte){
 
   const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
-  const hostC = "http://localhost:8000/api/compte/new";
-
-
-
+  const hostC = "http://localhost:8080/user/addCompte";
   const formData: FormData= new FormData();
 
   formData.append('partenaire', compte.partenaire);
@@ -68,7 +63,7 @@ addCompt(compte){
 
 getAllcomptess(data) {
 
-  const host = "http://localhost:8000/api/liste/compteall";
+  const host = "http://localhost:8080/user/listcompte";
 
   const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
 
@@ -78,7 +73,7 @@ getAllcomptess(data) {
 
 getDepocaissier(data) {
 
-  const host ="http://localhost:8000/api/liste/depot";
+  const host ="http://localhost:8080/user/listdepot";
 
   const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
 
@@ -88,7 +83,7 @@ getDepocaissier(data) {
 
 addDepot(depot){
 
-const hostD ="http://localhost:8000/api/depot/new";
+const hostD ="http://localhost:8080/user/addDepot";
 
 const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
 
@@ -111,14 +106,14 @@ adduser(partenaire, fileToUpload){
 
   const host = "http://localhost:8000/api/user/newuser";
   const formData: FormData= new FormData();
-  formData.append('login', partenaire.login);
-  formData.append('nom', partenaire.nom);
+  formData.append('username', partenaire.username);
+  formData.append('name', partenaire.name);
   formData.append('telephone', partenaire.telephone);
   formData.append('password', partenaire.password);
   formData.append('email', partenaire.email);
   formData.append('telephone', partenaire.telephone);
   formData.append('imageName', fileToUpload, fileToUpload.name);
-  formData.append('Profile', partenaire.Profile);
+  formData.append('profil', partenaire.profil);
 
   return this.http.post(host, formData , {headers : headers} );
 }

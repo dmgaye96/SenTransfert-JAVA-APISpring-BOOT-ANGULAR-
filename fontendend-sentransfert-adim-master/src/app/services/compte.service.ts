@@ -18,7 +18,7 @@ export class CompteService  {
 
 getUser() : Observable<Users[]>  {
 
-  const host = "http://localhost:8000/api/liste/utilisateur";
+  const host = "http://localhost:8080/user/listuser";
 
   const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
 

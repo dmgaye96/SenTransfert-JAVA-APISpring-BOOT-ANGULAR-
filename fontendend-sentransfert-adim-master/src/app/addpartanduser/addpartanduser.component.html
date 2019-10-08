@@ -11,42 +11,82 @@
 
           <div class="card border-0 rounded">
             <div class="card-body">
-              <form #imageForm=ngForm (ngSubmit)="onsubmit(imageForm.value)">
+              <form [formGroup]="utilisateur" (ngSubmit)="onsubmit(utilisateur.value)">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Nom complet de l'Admine</label>
                   <input type="name" class="form-control  rounded" id="exampleFormControlInput1"
-                    placeholder="Nom complet de l'Admine" name="nom" ngModel>
+                         placeholder="Nom complet de l'Admine" formControlName="name"  name="name" >
+                  <div class="text-danger"  *ngFor="let error of errorMessage.nom">
+                    <div *ngIf="utilisateur.get('name').hasError(error.type) &&
+                       (utilisateur.get('name').dirty || utilisateur.get('name').touched)">
+                      {{error.message}}
+                    </div>
+                  </div>
+
                 </div>
 
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Telephone</label>
-                  <input type="number" #telephone ngModel required="required" min=700000000 max=800000000
-                    name="telephone" class="form-control  rounded" id="exampleFormControlInput1"
-                    placeholder="Telephone" name="telephone">
+                  <input formControlName="telephone"   class="form-control  rounded"  placeholder="Telephone" name="telephone">
+
+                  <div class="text-danger" *ngFor="let error of errorMessage.telephone">
+                    <div *ngIf="utilisateur.get('telephone').hasError(error.type) &&
+                     (utilisateur.get('telephone').dirty || utilisateur.get('telephone').touched)">
+                      {{error.message}}
+                    </div>
+                  </div>
+
                 </div>
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Email address</label>
                   <input type="email" class="form-control  rounded" id="exampleFormControlInput1"
-                    placeholder="name@example.com" name="email" ngModel>
+                         placeholder="name@example.com" name="email" formControlName="email"  >
+                  <div class="text-danger"  *ngFor="let error of errorMessage.email">
+                    <div *ngIf="utilisateur.get('email').hasError(error.type) &&
+                       (utilisateur.get('email').dirty || utilisateur.get('email').touched)">
+                      {{error.message}}
+                    </div>
+                  </div>
+
                 </div>
 
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Login</label>
-                  <input type="text" #login ngModel required="required" name="login" class="form-control" id="username"
-                    class="form-control  rounded" placeholder="Login">
+                  <input type="text" formControlName="username"  name="username" class="form-control" id="login"
+                         class="form-control  rounded" placeholder="Login">
+                  <div class="text-danger"  *ngFor="let error of errorMessage.login">
+                    <div *ngIf="utilisateur.get('username').hasError(error.type) &&
+                       (utilisateur.get('username').dirty || utilisateur.get('username').touched)">
+                      {{error.message}}
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Password</label>
                   <input type="password" class="form-control  rounded" id="exampleFormControlInput1"
-                    placeholder="Password" name="password" ngModel>
+                         placeholder="Password" name="password" formControlName="password" >
+
+                  <div class="text-danger"  *ngFor="let error of errorMessage.password">
+                    <div *ngIf="utilisateur.get('password').hasError(error.type) &&
+                       (utilisateur.get('password').dirty || utilisateur.get('password').touched)">
+                      {{error.message}}
+                    </div>
+                  </div>
                 </div>
 
 
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Role</label>
-                  <select class="form-control" #Profile ngModel name="Profile">
-                    <option *ngFor="let pr of profils" value="{{pr.id}}">{{pr.libelle}}</option>
+                  <select class="form-control" formControlName="profil"  name="profil">
+                    <option *ngFor="let pr of profils" value="{{pr.id}}">{{pr.name}}</option>
                   </select>
+
+                  <div class="text-danger"  *ngFor="let error of errorMessage.profil">
+                    <div *ngIf="utilisateur.get('profil').hasError(error.type) &&
+                     (utilisateur.get('profil').dirty || utilisateur.get('profil').touched)">
+                      {{error.message}}
+                    </div>
+                  </div>
                 </div>
 
                 <div class="form-group">
@@ -56,15 +96,15 @@
                   </div>
                   <label>Photo</label>
                   <div class="custom-file">
-                    <input input name="photo" #photo ngModel type="file" #Image accept="image/"
-                      (change)="handleFileInput($event.target.files)" class="custom-file-input">
+                    <input input name="photo"  formControlName="photo" type="file" #Image accept="image/"
+                           (change)="handleFileInput($event.target.files)" class="custom-file-input">
                     <label class="custom-file-label rounded" for="customFile">Photo</label>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <button type="submit" [disabled]="Image.value=='' || !imageForm.valid"
-                    class="btn btn-lightning rounded mb-2 mr-2">Ajouter</button>
+                  <button type="submit"
+                          class="btn btn-lightning rounded mb-2 mr-2">Ajouter</button>
                 </div>
               </form>
             </div>

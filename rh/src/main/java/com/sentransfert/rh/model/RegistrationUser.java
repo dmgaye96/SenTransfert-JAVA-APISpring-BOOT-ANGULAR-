@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class RegistrationUser {
 
-
+//info user
     private String name;
     private String username;
     private String email;

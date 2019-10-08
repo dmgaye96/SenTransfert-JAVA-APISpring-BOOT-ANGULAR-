@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -37,6 +35,13 @@ public class UserController {
     public List<Partenaire> listPartenaire(){ return partenaireRepository.findAll(); }
 
 
+
+    @Autowired
+    private UserRepository userRepository;
+    @GetMapping(value = "/listuser")
+    public List<User> listuser(){ return userRepository.findAll(); }
+
+
     @Autowired
     private DepotRepository depotRepository;
     @GetMapping(value = "/listdepot")
@@ -52,22 +57,18 @@ public class UserController {
 
     @Autowired
     private RoleRepository roleRepository;
-    @RequestMapping(value = "/listrole", method = RequestMethod.GET, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+    @GetMapping(value = "/listrole" )
 //    @GetMapping(value = "/listrole" , method = RequestMethod.GET ,consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE })
     public List<Role> listeRole(){ return roleRepository.findAll(); }
 
-
-
-    @Autowired
-    UserRepository userRepository;
 
 
 
 
     @Autowired
     PasswordEncoder encoder	;
-    @PostMapping(value = "/add",consumes =(MediaType.APPLICATION_JSON_VALUE))
-    public User add (@RequestBody(required = false) RegistrationUser  registrationUser){
+    @PostMapping(value = "/add")
+    public User add (RegistrationUser  registrationUser){
         User u =new User();
         u.setUsername(registrationUser.getUsername());
         u.setName(registrationUser.getName());
@@ -83,7 +84,6 @@ public class UserController {
         User user=userDetailsService.getUserConnecte();
         user.getPartenaire();
         u.setPartenaire(user.getPartenaire());
-
         return userRepository.save(u);
     }
 
@@ -98,8 +98,8 @@ public User detail(){
 
 
 
-    @PostMapping(value = "/addPartener", consumes = (MediaType.APPLICATION_JSON_VALUE))
-    public Partenaire addpuc(@RequestBody(required = false) RegistrationUser registrationUser) {
+    @PostMapping(value = "/addPartener")
+    public Partenaire addpuc( RegistrationUser registrationUser) {
 
         //AJOUT PARTENAIRE
         Partenaire p = new Partenaire();
@@ -111,17 +111,12 @@ public User detail(){
 
         //AJOUT COMPTE
         Compte c = new Compte();
-        // String nb;
-        // nb = "MA"+(10000+(int) Math.random()*(99999-10000));
         SimpleDateFormat formater = null;
-
         formater = new SimpleDateFormat("ssyyyyMMddHHmm");
         Date now=new Date();
         String numcompt = formater.format(now);
-
         c.setNumerocompte(numcompt);
         c.setSolde((double) 0);
-        //c.setNumeroCompte(nb);
         c.setPartenaire(p);
         c.setSolde((double) 75000);
         compteRepository.save(c);
@@ -133,7 +128,7 @@ public User detail(){
         u.setPassword(encoder.encode(registrationUser.getPassword()));
         u.setTelephone(registrationUser.getTelephone());
         u.setEmail(registrationUser.getEmail());
-        u.setStatut("debloquer");
+        u.setStatut("ACTIF");
         Set<Role> roles =new HashSet<>();
         Role role =new Role();
         role.setId(registrationUser.getProfil());
@@ -147,7 +142,7 @@ public User detail(){
     }
 
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PostMapping(value = "/addDepot",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    @PostMapping(value = "/addDepot")
     public ResponseEntity<String> addepot (@RequestBody(required = false) RegistrationUser registrationUser){
         Depot d =new Depot();
         d.setDate(new Date());
@@ -166,19 +161,16 @@ public User detail(){
 
 
 
-    //@PreAuthorize("hasAuthority('ROLE_SUPER_ADMIN')")
-    @PostMapping(value = "/addCompte",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    //@PreAuthorize("hasAuthority('ROLE_SUPER_ADMIN')") //permet de definr qui et qui on accce au token
+    @PostMapping(value = "/addCompte")
     public ResponseEntity<String> findcompte (@RequestBody(required = false) RegistrationUser registrationUser){
 
         Compte c = new Compte();
-
         SimpleDateFormat formater = null;
-
         formater = new SimpleDateFormat("ssyyyyMMddHHmm");
         Date now=new Date();
         String numcompt = formater.format(now);
-         Partenaire p= registrationUser.getPartenaire();
-
+        Partenaire p= registrationUser.getPartenaire();
         c.setNumerocompte(numcompt);
         c.setSolde((double) 0);
         c.setSolde((double) 75000);
@@ -189,14 +181,12 @@ public User detail(){
     }
 
     @PostMapping(value = "/findCompte",consumes =(MediaType.APPLICATION_JSON_VALUE))
-    public Compte findCompte (@RequestBody(required = false) RegistrationUser  registrationUser) throws Exception {
+    public Compte findCompteer(@RequestBody(required = false) RegistrationUser  registrationUser) throws Exception {
 
         Compte c = (Compte) compteRepository.findCompteByNumerocompte(registrationUser.getNumerocompte()).orElseThrow(
                 ()->new Exception ("Ce numero de Compte n'existe pas"));
         return c;
     }
-
-
 
     @PostMapping(value = "/compteUser",consumes =(MediaType.APPLICATION_JSON_VALUE))
     public ResponseEntity<String> addCompteUser (@RequestBody(required = false) RegistrationUser  accountUser){
@@ -204,64 +194,9 @@ public User detail(){
         user.setUsername(accountUser.getUsername());
         user.setCompte(accountUser.getCompte());
         userRepository.save(user);
-
-        return new ResponseEntity<>("Compte Utilsateur Ajouté Avec Succés", HttpStatus.OK);
+        return new ResponseEntity<>("Le Compte  a ete allouer  Avec Succés", HttpStatus.OK);
     }
 
-
-
-    @PutMapping(value = "/statut/{id}",consumes =(MediaType.APPLICATION_JSON_VALUE))
-    public ResponseEntity<String> blockUser (@PathVariable("id")long id) throws Exception {
-        User etat= userRepository.findById(id).orElseThrow(
-                ()->new Exception ("Ce user n'existe pas")
-        );
-
-        if(etat.getUsername().equals("kabirou")){
-            return new ResponseEntity<>(etat.getUsername()+ " Ne peut pas être bloqué car c'est le super admin", HttpStatus.OK);
-        }
-        if (etat.getStatut().equals("debloquer")){
-            etat.setStatut("bloquer");
-            userRepository.save(etat);
-            return new ResponseEntity<>(etat.getUsername()+ " a été bloqué", HttpStatus.OK);
-        }
-        else{
-            etat.setStatut("debloquer");
-            userRepository.save(etat);
-            return new ResponseEntity<>(etat.getUsername()+ " a été débloqué", HttpStatus.OK);
-        }
-    }
-
-    @PostMapping(value = "/findUsername",consumes =(MediaType.APPLICATION_JSON_VALUE))
-    public User findUsername (@RequestBody(required = false) RegistrationUser  registrationUser) throws Exception {
-
-        User u = (User) userRepository.findByUsername(registrationUser.getUsername())
-                .orElseThrow(()->new Exception ("Ce username n'existe pas")
-
-                );
-        return u;
-
-    }
-
-
-
-    @PutMapping(value = "/statut/{id}",consumes =(MediaType.APPLICATION_JSON_VALUE))
-    public ResponseEntity<String> blockPartener (@PathVariable("id")int id) throws Exception {
-        Partenaire etat= partenaireRepository.findById((long) id).orElseThrow(
-                ()->new Exception ("Ce Partenaire n'existe pas")
-        );
-
-
-        if (etat.getStatut().equals("debloquer")){
-            etat.setStatut("bloquer");
-            partenaireRepository.save(etat);
-            return new ResponseEntity<>(etat.getRaisonsociale()+ " a été bloqué", HttpStatus.OK);
-        }
-        else{
-            etat.setStatut("debloquer");
-            partenaireRepository.save(etat);
-            return new ResponseEntity<>(etat.getRaisonsociale()+ " a été débloqué", HttpStatus.OK);
-        }
-    }
 }
 
 

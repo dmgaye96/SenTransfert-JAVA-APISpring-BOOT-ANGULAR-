@@ -15,9 +15,9 @@ export class PartenaireService {
    partenaires:AddPartenaire[] =[];
    partenairesSubject = new Subject<AddPartenaire[]>();
 
-  public ListepartUrl = "http://localhost:8000/api/liste/partenaireliste";
+  public ListepartUrl = "http://localhost:8080/user/listpartenaire";
 
-  public addpartenaire = "http://localhost:8000/api/partenaire/new";
+  public addpartenaire = "http://localhost:8080/user/addPartener";
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -34,17 +34,18 @@ export class PartenaireService {
 
     const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
 
-    const host = "http://localhost:8000/api/user/newadmin ";
+    const host = "http://localhost:8080/user/addPartener";
     const formData: FormData= new FormData();
-    formData.append('login', partenaire.login);
+    formData.append('username', partenaire.username);
     formData.append('raisonsociale', partenaire.raisonsociale);
     formData.append('ninea', partenaire.ninea);
     formData.append('adresse', partenaire.adresse);
-    formData.append('nom', partenaire.nom);
+    formData.append('name', partenaire.name);
     formData.append('telephone', partenaire.telephone);
     formData.append('password', partenaire.password);
     formData.append('email', partenaire.email);
     formData.append('telephone', partenaire.telephone);
+    formData.append('profil', partenaire.profil);
     formData.append('imageName', fileToUpload, fileToUpload.name);
 
     return this.http.post(host, formData , {headers : headers} );
@@ -58,7 +59,7 @@ blocker(id: number) {
   const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
 
 
-  const hostbloc ="http://localhost:8000/apipartenaires/bloquer/"+id;
+  const hostbloc ="http://localhost:8080/service/statut1/"+id;
 
 
 
@@ -69,7 +70,7 @@ blocker1(id: number) {
   const headers = new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem('token'));
 
 
-  const hostbloc ="http://localhost:8000/api/utilisateur/bloque/"+id;
+  const hostbloc ="http://localhost:8080/service/statut/"+id;
 
 
 

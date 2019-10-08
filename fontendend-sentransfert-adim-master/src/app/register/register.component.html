@@ -15,10 +15,10 @@
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Nom complet de l'Admine</label>
                   <input type="name" class="form-control  rounded" id="exampleFormControlInput1"
-                    placeholder="Nom complet de l'Admine" formControlName="nom"  name="nom" >
+                    placeholder="Nom complet de l'Admine" formControlName="name"  name="name" >
                     <div class="text-danger"  *ngFor="let error of errorMessage.nom">
-                      <div *ngIf="utilisateur.get('nom').hasError(error.type) &&
-                       (utilisateur.get('nom').dirty || utilisateur.get('nom').touched)">
+                      <div *ngIf="utilisateur.get('name').hasError(error.type) &&
+                       (utilisateur.get('name').dirty || utilisateur.get('name').touched)">
                           {{error.message}}
                       </div>
                   </div>
@@ -52,11 +52,11 @@
 
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Login</label>
-                  <input type="text" formControlName="login"  name="login" class="form-control" id="login"
+                  <input type="text" formControlName="username"  name="username" class="form-control" id="login"
                     class="form-control  rounded" placeholder="Login">
                     <div class="text-danger"  *ngFor="let error of errorMessage.login">
-                      <div *ngIf="utilisateur.get('login').hasError(error.type) &&
-                       (utilisateur.get('login').dirty || utilisateur.get('login').touched)">
+                      <div *ngIf="utilisateur.get('username').hasError(error.type) &&
+                       (utilisateur.get('username').dirty || utilisateur.get('username').touched)">
                           {{error.message}}
                       </div>
                   </div>
@@ -77,13 +77,13 @@
 
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Role</label>
-                  <select class="form-control" formControlName="Profile"  name="Profile">
-                    <option *ngFor="let pr of profils" value="{{pr.id}}">{{pr.libelle}}</option>
+                  <select class="form-control" formControlName="profil"  name="profil">
+                    <option *ngFor="let pr of profils" value="{{pr.id}}">{{pr.name}}</option>
                   </select>
 
-                  <div class="text-danger"  *ngFor="let error of errorMessage.Profile">
-                    <div *ngIf="utilisateur.get('Profile').hasError(error.type) &&
-                     (utilisateur.get('Profile').dirty || utilisateur.get('Profile').touched)">
+                  <div class="text-danger"  *ngFor="let error of errorMessage.profil">
+                    <div *ngIf="utilisateur.get('profil').hasError(error.type) &&
+                     (utilisateur.get('profil').dirty || utilisateur.get('profil').touched)">
                         {{error.message}}
                     </div>
                 </div>
