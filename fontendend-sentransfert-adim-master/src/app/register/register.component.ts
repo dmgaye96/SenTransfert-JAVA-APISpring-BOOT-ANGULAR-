@@ -93,7 +93,7 @@ export class RegisterComponent implements OnInit {
       console.log(res);
       this.profils = res;
       if (this.authService.getRole()=="[ROLE_SUPERADMIN]") {
-        this.profils = [this.profils[0], this.profils[1]];
+        this.profils = [this.profils[1], this.profils[2]];
       }
     });
   }

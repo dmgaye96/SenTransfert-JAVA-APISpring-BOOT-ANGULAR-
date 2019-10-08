@@ -26,7 +26,7 @@ public class ServiceController {
     PartenaireRepository partenaireRepository;
 
 
-    @PostMapping(value = "/statut/{id}",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping(value = "/statut/{id}")
     public ResponseEntity<String> blockUser (@PathVariable("id")int id) throws Exception {
         User etat= userRepository.findById((long) id).orElseThrow(()->new Exception ("Ce user n'existe pas"));
 
@@ -48,14 +48,13 @@ public class ServiceController {
 
 
 
-    @PostMapping(value = "/statut1/{id}",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    @GetMapping(value = "/statut1/{id}")
     public ResponseEntity<String> blockPartener (@PathVariable("id")int id) throws Exception {
         Partenaire etat= partenaireRepository.findById((long) id).orElseThrow(
                 ()->new Exception ("Ce Partenaire n'existe pas")
         );
 
-
-        if (etat.getStatut().equals("debloquer")){
+        if (etat.getStatut().equals("ACTIF")){
             etat.setStatut("bloquer");
             partenaireRepository.save(etat);
             return new ResponseEntity<>(etat.getRaisonsociale()+ " a été bloqué", HttpStatus.OK);
@@ -68,7 +67,7 @@ public class ServiceController {
     }
 
 
-    @PostMapping(value = "/findUsername",consumes =(MediaType.APPLICATION_JSON_VALUE))
+    @PostMapping(value = "/findUsername")
     public User findUsername (@RequestBody(required = false) RegistrationUser  registrationUser) throws Exception {
 
         User u = (User) userRepository.findByUsername(registrationUser.getUsername())
